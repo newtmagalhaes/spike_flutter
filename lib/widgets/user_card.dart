@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:spike_flutter/interfaces/models/user_public.dart';
-import 'package:spike_flutter/interfaces/repositories/auth_repository.dart';
 import 'package:spike_flutter/widgets/static_field.dart';
 
-class UserCard extends StatefulWidget {
-  const UserCard({super.key});
+class UserCard extends StatelessWidget {
+  const UserCard({super.key, required this.user});
 
-  @override
-  State<StatefulWidget> createState() => _UserState();
-}
-
-class _UserState extends State<UserCard> {
-  final AuthRepository _authRepository = AuthRepository();
+  final UserPublic user;
 
   @override
   Widget build(BuildContext context) {
-    UserPublic user = _authRepository.getLoggedUser();
 
     return SizedBox.fromSize(
       size: Size(300, 400),
