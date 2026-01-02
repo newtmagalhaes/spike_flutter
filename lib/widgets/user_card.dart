@@ -19,14 +19,6 @@ class UserCard extends StatelessWidget {
           children: [
             StaticField(name: 'Username', value: user.username),
             StaticField(name: 'Nome', value: user.name),
-            MaterialButton(
-              onPressed: () => {print('Saiu')},
-              color: Color.fromARGB(255, 255, 126, 126),
-              child: Text(
-                'Sair',
-                style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
-              ),
-            ),
           ],
         ),
       ),

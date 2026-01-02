@@ -15,32 +15,12 @@ class _HomePageState extends State<HomePage> {
       AuthRepository.getAuthRepository();
   // static UserPublic? user = AuthRepository.getAuthRepository().getLoggedUser();
 
-  Widget home() {
-    return user != null ? UserCard(user: user) :;
-  }
-
-  AppBar appBar(BuildContext context) {
-    UserPublic? user = _authRepository.getLoggedUser();
-    return user == null
-        ? AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/auth/login');
-              },
-              icon: Icon(Icons.menu),
-            ),
-            title: Text('Home'),
-          )
-        : 
-          );
-  }
-
   @override
   Widget build(BuildContext context) {
     UserPublic? user = _authRepository.getLoggedUser();
     return user == null
-      ? _HomePageStateAnonimo()
-      : _HomePageStateLogado(user: user,);
+        ? _HomePageStateAnonimo()
+        : _HomePageStateLogado(user: user);
   }
 }
 
@@ -52,7 +32,8 @@ class _HomePageStateAnonimo extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.lock_open_outlined),
-          onPressed: () => Navigator.pushReplacementNamed(context, '/auth/login'),
+          onPressed: () =>
+              Navigator.pushReplacementNamed(context, '/auth/login'),
         ),
         title: Text('Home'),
       ),
@@ -62,7 +43,6 @@ class _HomePageStateAnonimo extends StatelessWidget {
 }
 
 class _HomePageStateLogado extends StatelessWidget {
-
   const _HomePageStateLogado({super.key, required this.user});
 
   final UserPublic user;
@@ -72,13 +52,38 @@ class _HomePageStateLogado extends StatelessWidget {
     return Scaffold(
       backgroundColor: .fromARGB(126, 255, 126, 126),
       appBar: AppBar(
-            leading: IconButton(
-              onPressed: null,
-              icon: Icon(Icons.verified_user_rounded),
+        leading: IconButton(
+          onPressed: null,
+          icon: Icon(Icons.verified_user_rounded),
+        ),
+        title: Text('bem vindo, ${user.name}'),
+      ),
+      body: Container(
+        alignment: .center,
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [
+            UserCard(user: user),
+            MaterialButton(
+              onPressed: () {
+                AuthRepository.getAuthRepository().logout();
+                Navigator.pushReplacementNamed(context, '/');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Usuário deslogado'),
+                    backgroundColor: .fromARGB(255, 255, 126, 255),
+                  ),
+                );
+              },
+              color: Color.fromARGB(255, 255, 126, 126),
+              child: Text(
+                'Sair',
+                style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+              ),
             ),
-            title: Text('bem vindo, ${user.name}'),),
-      body: Container(alignment: .center, child: home()),
+          ],
+        ),
+      ),
     );
   }
-  
 }

@@ -7,9 +7,12 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.fromSize(
-        size: Size.square(400),
-        child: Card.outlined(child: LoginForm()),
+      body: Container(
+        alignment: .center,
+        child: SizedBox.fromSize(
+          size: Size.square(400),
+          child: Card.outlined(child: LoginForm()),
+        ),
       ),
     );
   }
