@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spike_flutter/interfaces/models/user_public.dart';
-import 'package:spike_flutter/interfaces/repositories/auth_repository.dart';
+import 'package:spike_flutter/data/models/user_public.dart';
+import 'package:spike_flutter/data/repositories/auth_repository.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});

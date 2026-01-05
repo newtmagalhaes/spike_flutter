@@ -11,7 +11,7 @@ class StaticField extends StatelessWidget {
     return Row(
       mainAxisAlignment: .center,
       children: [
-        SizedBox(width: 80, child: Text(name, textAlign: .start)),
+        SizedBox(width: 80, child: Card.outlined(child: Text(name, textAlign: .start))),
         SizedBox(width: 80, child: Text(value, textAlign: .start, softWrap: true,)),
       ],
     );

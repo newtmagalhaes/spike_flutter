@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:spike_flutter/interfaces/models/user_public.dart';
+import 'package:spike_flutter/data/models/user_public.dart';
 
 class AuthRepository {
   static final single = AuthRepository();

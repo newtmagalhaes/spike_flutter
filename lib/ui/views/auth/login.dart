@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spike_flutter/widgets/forms/login_form.dart';
+import 'package:spike_flutter/data/forms/auth/login_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

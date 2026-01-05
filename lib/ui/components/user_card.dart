@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spike_flutter/interfaces/models/user_public.dart';
-import 'package:spike_flutter/widgets/static_field.dart';
+import 'package:spike_flutter/data/models/user_public.dart';
+import 'package:spike_flutter/ui/components/static_field.dart';
 
 class UserCard extends StatelessWidget {
   const UserCard({super.key, required this.user});

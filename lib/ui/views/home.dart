@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spike_flutter/interfaces/models/user_public.dart';
-import 'package:spike_flutter/interfaces/repositories/auth_repository.dart';
-import 'package:spike_flutter/widgets/user_card.dart';
+import 'package:spike_flutter/data/models/user_public.dart';
+import 'package:spike_flutter/data/repositories/auth_repository.dart';
+import 'package:spike_flutter/ui/components/user_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
