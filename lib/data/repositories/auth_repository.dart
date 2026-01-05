@@ -1,17 +1,25 @@
 import 'package:get/get.dart';
+import 'package:spike_flutter/data/mappers/user_public_json_placeholder.dart';
 import 'package:spike_flutter/data/models/user_public.dart';
+import 'package:spike_flutter/data/repositories/mocked_user_repository.dart';
+import 'package:spike_flutter/data/repositories/user_repository.dart';
+import 'package:spike_flutter/data/services/api/json_placeholder_api/json_placeholder_api.dart';
 
 class AuthRepository {
   static final single = AuthRepository();
+  // final _userRepository = MockedUserRepository();
+  final _userRepository = JsonPlaceholderUserRepository(
+    jsonPlaceholderAPI: JsonPlaceholderApi(),
+    userPublicJsonPlaceholder: UserPublicJsonPlaceholder(),
+  );
 
   static AuthRepository getAuthRepository() => single;
 
-  List<UserPublic> users = [TempUser("img-00.png", "anilton", "anilton M")];
 
   UserPublic? loggedUser;
 
-  UserPublic? login(String username, String password) {
-    loggedUser = users.firstWhereOrNull((u) => u.username == username);
+  Future<UserPublic?> login(String username, String password) async {
+    loggedUser = (await _userRepository.listUsers()).firstWhereOrNull((u) => u.username == username);
     return loggedUser;
   }
 
@@ -21,10 +29,10 @@ class AuthRepository {
 }
 
 class TempUser implements UserPublic {
-  TempUser(this.imgId, this.username, this.name);
+  TempUser(this.id, this.username, this.name);
 
   @override
-  String? imgId;
+  int id;
 
   @override
   late String name;

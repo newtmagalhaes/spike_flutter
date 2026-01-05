@@ -17,10 +17,10 @@ class _LoginFormState extends State<LoginForm> {
   final _username = TextEditingController();
   final _password = TextEditingController();
 
-  void submit(BuildContext context) {
+  Future<void> submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       // form is valid
-      UserPublic? user = _authRepository.login(_username.text, _password.text);
+      UserPublic? user = await _authRepository.login(_username.text, _password.text);
       if (user == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

@@ -1,5 +1,5 @@
 abstract class UserPublic {
   late String username;
   late String name;
-  late String? imgId;
+  late int id;
 }
