@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 abstract class BaseJsonConverter<T> {
   Map<String, dynamic> toJson(T obj);
 

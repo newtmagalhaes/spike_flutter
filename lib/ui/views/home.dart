@@ -14,13 +14,25 @@ class _HomePageState extends State<HomePage> {
   static final AuthRepository _authRepository =
       AuthRepository.getAuthRepository();
   // static UserPublic? user = AuthRepository.getAuthRepository().getLoggedUser();
+  late Future<UserPublic?> _user;
 
   @override
   Widget build(BuildContext context) {
-    UserPublic? user = _authRepository.getLoggedUser();
-    return user == null
-        ? _HomePageStateAnonimo()
-        : _HomePageStateLogado(user: user);
+    return FutureBuilder(
+      future: _user,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _HomePageStateLogado(user: snapshot.data!);
+        }
+        return _HomePageStateAnonimo();
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _user = _authRepository.getLoggedUser();
   }
 }
 

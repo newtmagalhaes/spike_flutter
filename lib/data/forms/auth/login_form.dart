@@ -12,33 +12,25 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final AuthRepository _authRepository = AuthRepository.getAuthRepository();
 
+  late Future<UserPublic?> _user;
+
   final _formKey = GlobalKey<FormState>();
 
   final _username = TextEditingController();
   final _password = TextEditingController();
 
-  Future<void> submit(BuildContext context) async {
+  Future<UserPublic?> submit() async {
     if (_formKey.currentState!.validate()) {
       // form is valid
-      UserPublic? user = await _authRepository.login(_username.text, _password.text);
-      if (user == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Falha no login'),
-            backgroundColor: .fromARGB(255, 255, 126, 126),
-          ),
-        );
-        return;
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Logado como ${user.name}'),
-          backgroundColor: const .fromARGB(126, 126, 255, 126),
-        ),
-      );
-      Navigator.pushReplacementNamed(context, '/');
+      return _authRepository.login(_username.text, _password.text);
     }
+    throw Exception('form inválido');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _user = _authRepository.getLoggedUser();
   }
 
   @override
@@ -73,7 +65,28 @@ class _LoginFormState extends State<LoginForm> {
           ),
           ElevatedButton(
             onPressed: () {
-              submit(context);
+              setState(() {
+                _user = submit();
+                _user.then((user) {
+                  if (user == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Falha no login'),
+                        backgroundColor: .fromARGB(255, 255, 126, 126),
+                      ),
+                    );
+                    return;
+                  }
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Logado como ${user.name}'),
+                      backgroundColor: const .fromARGB(126, 126, 255, 126),
+                    ),
+                  );
+                  Navigator.pushReplacementNamed(context, '/');
+                });
+              });
             },
             child: const Text('Entrar'),
           ),

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:spike_flutter/data/mappers/user_public_json_placeholder.dart';
 import 'package:spike_flutter/data/models/user_public.dart';
-import 'package:spike_flutter/data/repositories/mocked_user_repository.dart';
 import 'package:spike_flutter/data/repositories/user_repository.dart';
 import 'package:spike_flutter/data/services/api/json_placeholder_api/json_placeholder_api.dart';
 
@@ -15,17 +14,18 @@ class AuthRepository {
 
   static AuthRepository getAuthRepository() => single;
 
-
-  UserPublic? loggedUser;
+  Future<UserPublic?> loggedUser = Future.value(null);
 
   Future<UserPublic?> login(String username, String password) async {
-    loggedUser = (await _userRepository.listUsers()).firstWhereOrNull((u) => u.username == username);
+    loggedUser = _userRepository.listUsers().then(
+      (users) => users.firstWhereOrNull((u) => u.username == username),
+    );
     return loggedUser;
   }
 
-  void logout() => loggedUser = null;
+  void logout() => loggedUser = Future.value(null);
 
-  UserPublic? getLoggedUser() => loggedUser;
+  Future<UserPublic?> getLoggedUser() => loggedUser;
 }
 
 class TempUser implements UserPublic {

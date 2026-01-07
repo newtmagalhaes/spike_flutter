@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:spike_flutter/data/services/api/json_placeholder_api/converters/user_converter.dart';
 import 'package:spike_flutter/data/services/api/json_placeholder_api/models/user.dart';
@@ -9,12 +7,9 @@ class JsonPlaceholderApi {
   final _httpClient = GetHttpClient(baseUrl: _baseURL);
   final _userConverter = UserConverter();
 
-  Future<List<User>> listUsers() async {
-    var response = await _httpClient.get(
-      '/users',
-      decoder: (data) => _userConverter.fromJsonList(data),
-    );
-
-    return Future.value(response.body);
+  Future<List<User>> listUsers() {
+    return _httpClient
+        .get('/users', decoder: (data) => _userConverter.fromJsonList(data))
+        .then((r) => r.body!);
   }
 }
