@@ -13,26 +13,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   static final AuthRepository _authRepository =
       AuthRepository.getAuthRepository();
-  // static UserPublic? user = AuthRepository.getAuthRepository().getLoggedUser();
-  late Future<UserPublic?> _user;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _user,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return _HomePageStateLogado(user: snapshot.data!);
-        }
-        return _HomePageStateAnonimo();
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _user = _authRepository.getLoggedUser();
+    var user = _authRepository.getLoggedUser();
+    return user == null
+        ? _HomePageStateAnonimo()
+        : _HomePageStateLogado(user: user);
   }
 }
 
@@ -55,7 +42,7 @@ class _HomePageStateAnonimo extends StatelessWidget {
 }
 
 class _HomePageStateLogado extends StatelessWidget {
-  const _HomePageStateLogado({super.key, required this.user});
+  const _HomePageStateLogado({required this.user});
 
   final UserPublic user;
 

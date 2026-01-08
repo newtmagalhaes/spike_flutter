@@ -12,8 +12,6 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final AuthRepository _authRepository = AuthRepository.getAuthRepository();
 
-  late Future<UserPublic?> _user;
-
   final _formKey = GlobalKey<FormState>();
 
   final _username = TextEditingController();
@@ -28,12 +26,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _user = _authRepository.getLoggedUser();
-  }
-
-  @override
   void dispose() {
     _username.dispose();
     _password.dispose();
@@ -42,6 +34,15 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    var s = ScaffoldMessenger.of(context);
+    const failSnack = SnackBar(
+      content: Text('Falha no login'),
+      backgroundColor: .fromARGB(255, 255, 126, 126),
+    );
+    const successSnack = SnackBar(
+      content: Text('Logado'),
+      backgroundColor: .fromARGB(126, 126, 255, 126),
+    );
     return Form(
       key: _formKey,
       child: Column(
@@ -66,26 +67,19 @@ class _LoginFormState extends State<LoginForm> {
           ElevatedButton(
             onPressed: () {
               setState(() {
-                _user = submit();
-                _user.then((user) {
-                  if (user == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Falha no login'),
-                        backgroundColor: .fromARGB(255, 255, 126, 126),
-                      ),
-                    );
-                    return;
-                  }
+                submit()
+                    .then((user) {
+                      if (user == null) {
+                        s.showSnackBar(failSnack);
+                        return;
+                      }
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Logado como ${user.name}'),
-                      backgroundColor: const .fromARGB(126, 126, 255, 126),
-                    ),
-                  );
-                  Navigator.pushReplacementNamed(context, '/');
-                });
+                      s.showSnackBar(successSnack);
+                      Navigator.pushReplacementNamed(context, '/');
+                    })
+                    .onError((_, stack) {
+                      s.showSnackBar(failSnack);
+                    });
               });
             },
             child: const Text('Entrar'),

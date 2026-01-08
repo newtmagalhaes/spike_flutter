@@ -1,31 +1,23 @@
 import 'package:get/get.dart';
-import 'package:spike_flutter/data/mappers/user_public_json_placeholder.dart';
 import 'package:spike_flutter/data/models/user_public.dart';
 import 'package:spike_flutter/data/repositories/user_repository.dart';
-import 'package:spike_flutter/data/services/api/json_placeholder_api/json_placeholder_api.dart';
 
 class AuthRepository {
   static final single = AuthRepository();
   // final _userRepository = MockedUserRepository();
-  final _userRepository = JsonPlaceholderUserRepository(
-    jsonPlaceholderAPI: JsonPlaceholderApi(),
-    userPublicJsonPlaceholder: UserPublicJsonPlaceholder(),
-  );
+  final _userRepository = JsonPlaceholderUserRepository();
 
   static AuthRepository getAuthRepository() => single;
 
-  Future<UserPublic?> loggedUser = Future.value(null);
+  UserPublic? loggedUser;
 
-  Future<UserPublic?> login(String username, String password) async {
-    loggedUser = _userRepository.listUsers().then(
-      (users) => users.firstWhereOrNull((u) => u.username == username),
-    );
-    return loggedUser;
-  }
+  Future<UserPublic?> login(String username, String password) async =>
+      _userRepository.listUsers()
+      .then((users) => loggedUser = users.firstWhereOrNull((u) => u.username == username));
 
-  void logout() => loggedUser = Future.value(null);
+  void logout() => loggedUser = null;
 
-  Future<UserPublic?> getLoggedUser() => loggedUser;
+  UserPublic? getLoggedUser() => loggedUser;
 }
 
 class TempUser implements UserPublic {

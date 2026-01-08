@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spike_flutter/data/mappers/user_public_json_placeholder.dart';
 import 'package:spike_flutter/data/models/user_public.dart';
 import 'package:spike_flutter/data/repositories/user_repository.dart';
-import 'package:spike_flutter/data/services/api/json_placeholder_api/json_placeholder_api.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -12,10 +10,7 @@ class UsersPage extends StatefulWidget {
 }
 
 class _ListUsers extends State<UsersPage> {
-  final _userRepository = JsonPlaceholderUserRepository(
-    jsonPlaceholderAPI: JsonPlaceholderApi(),
-    userPublicJsonPlaceholder: UserPublicJsonPlaceholder(),
-  );
+  final _userRepository = JsonPlaceholderUserRepository();
   late Future<List<UserPublic>> _users;
 
   @override
