@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spike_flutter/data/models/user_public.dart';
 import 'package:spike_flutter/data/repositories/auth_repository.dart';
+import 'package:spike_flutter/ui/components/nav_bar.dart';
 import 'package:spike_flutter/ui/components/user_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,14 +29,15 @@ class _HomePageStateAnonimo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: .fromARGB(126, 126, 126, 255),
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.lock_open_outlined),
-          onPressed: () =>
-              Navigator.pushReplacementNamed(context, '/auth/login'),
-        ),
-        title: Text('Home'),
-      ),
+      appBar: NavBarMenu(title: 'Home'),
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: Icon(Icons.lock_open_outlined),
+      //     onPressed: () =>
+      //         Navigator.pushReplacementNamed(context, '/auth/login'),
+      //   ),
+      //   title: Text('Home'),
+      // ),
       body: Container(alignment: .center, child: Text('Hello world')),
     );
   }

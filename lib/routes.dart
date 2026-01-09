@@ -5,7 +5,7 @@ import 'package:spike_flutter/ui/views/users.dart';
 
 class Routes {
 
-  static final INITIAL = '/users';
+  static final INITIAL = '/';
 
   static final Map<String, WidgetBuilder> ROUTES = {
     '/': (context) => const HomePage(),

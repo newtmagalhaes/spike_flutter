@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spike_flutter/data/models/user_public.dart';
 import 'package:spike_flutter/data/repositories/user_repository.dart';
+import 'package:spike_flutter/ui/components/nav_bar.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({super.key});
@@ -21,7 +22,7 @@ class _ListUsers extends State<UsersPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text('Lista de Usuários')),
+    appBar: NavBarMenu(title: 'Lista de Usuários'),
     body: Container(
       alignment: .center,
       color: .fromARGB(255, 255, 255, 255),
